@@ -25,14 +25,13 @@ import org.dynamicjavatuples.Tuple;
 
 
 public class TupleInvocationHandler implements InvocationHandler{ 
-	private static String elementNameList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";  // currnetly only allow 26 elements in touple getA()....getZ();
 	private static Method methodToAccessValueOfToupleElement = null;
 	static{
 		try {
 			Class<?> args[] = {int.class};
 			methodToAccessValueOfToupleElement = TupleImpl.class.getDeclaredMethod("getElement", args);
 		} catch (Throwable e) {
-			throw new RuntimeException("could not access method getElement from class" + TupleImpl.class , e);
+			throw new RuntimeException("could not access method getElement(int i) from class: Seems like some one refactored the TupleImpl.java" + TupleImpl.class , e);
 		}
 	}
 	private Tuple testImpl;
@@ -44,29 +43,14 @@ public class TupleInvocationHandler implements InvocationHandler{
 	public Object invoke(Object object, Method method, Object[] params)
 			throws Throwable {
 		Object toRet = null;
-		String name = method.getName();
-		if(isInvokedMethodIsToAccessToupleElementValue(method, params)){
-			String elementName = name.substring("get".length());
-			int indexOfElement = elementNameList.indexOf(elementName);
-			if(indexOfElement == -1) throw new UnsupportedOperationException("Only support elements with name from A-Z(case-sensative) e.g. getA(), no arguments allowed");
-			Object args[] = {indexOfElement};
-			toRet = methodToAccessValueOfToupleElement.invoke(testImpl, args);   
-		}else{    	   
+		TupleNumber tupleAnnotation = method.getAnnotation(TupleNumber.class);
+		if(tupleAnnotation == null){
 			toRet = method.invoke(testImpl, params);
+		}else{
+			Object args[] = {tupleAnnotation.id()};
+			toRet = methodToAccessValueOfToupleElement.invoke(testImpl, args);   
 		}
 		return toRet;
-	}
-	/*
-	 * checks if the method invoke start with name 'get' and method name is only four 
-	 * character long, the we assume that method call is to access the value of an
-	 * element from touple, whose name is the fourth character in the method call. e.g.
-	 * getP(), meaning get the value of the element name P from the touple
-	 */
-	private boolean isInvokedMethodIsToAccessToupleElementValue(Method method,
-			Object[] params) {
-		return method.getName().startsWith("get") && 
-			   method.getName().length() == "getX".length() && 
-			   (params == null || params.length == 0);
 	}
 }
 

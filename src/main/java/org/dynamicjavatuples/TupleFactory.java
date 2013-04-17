@@ -23,33 +23,29 @@ import java.lang.reflect.Proxy;
 import org.dynamicjavatuples.impl.TupleImpl;
 import org.dynamicjavatuples.impl.TupleInvocationHandler;
 
+import com.java.tuple.test.Address;
+
 
 public class TupleFactory {
-	public static <A,B> TupleAB<A,B> createInstance(Class<TupleAB> toupleType, A a, B b) {
-		return (TupleAB<A,B>) getInstance(toupleType, toObjectArra(a,b));
+	@SuppressWarnings("unchecked")
+	public static <A,B,C extends Pair<A,B>> C createInstance(Class<C> interfaceName, A a, B b) {
+		return (C) getInstance(interfaceName, toObjectArray(a,b));
 	}
-	public static <A,B,C> TupleABC<A,B,C> createInstance(Class<TupleABC> toupleType, A a, B b, C c) {
-		return (TupleABC<A,B,C>) getInstance(toupleType, toObjectArra(a,b,c));
-	}
-	public static <A,B,C,D> TupleABCD<A,B,C,D> createInstance(Class<TupleABCD> toupleType, A a, B b, C c, D d) {
-		return (TupleABCD<A,B,C,D>) getInstance(toupleType, toObjectArra(a,b,c,d));
-	}
-	public static <A, B, C, D, E> TupleABCDE<A, B, C, D, E> createInstance(Class<TupleABCDE> toupleType, A a, B b, C c, D d, E e) {
-		return (TupleABCDE<A, B, C, D, E>) getInstance(toupleType, toObjectArra(a,b,c,d,e));
+	@SuppressWarnings("unchecked")
+	public static <A,B,C,D,E extends Address<A,B,C,D>> E createInstance(Class<E> interfaceName, A a, B b, C c, D d){
+		return (E) getInstance(interfaceName, toObjectArray(a,b,c,d));
 	}
 
 	
-	private static Object[] toObjectArra(Object...objects){
+	protected static Object[] toObjectArray(Object...objects){
 		return objects;
 	}
 
-	private static <A extends Tuple> Object getInstance(Class<A> interfaceType, Object arr[]) {
-		@SuppressWarnings("rawtypes")
-		int noOfElementsInTouple = interfaceType.getTypeParameters().length;
-		if(noOfElementsInTouple > 26) throw new UnsupportedOperationException("Cannot create touple with more than 26 elements");
+	protected static <T extends Tuple> Object getInstance(Class<T> interfaceType, Object...args) {
+		
 		Tuple t = (Tuple) Proxy.newProxyInstance(
 				interfaceType.getClassLoader(), new Class<?>[] { interfaceType },
-				new TupleInvocationHandler(new TupleImpl(arr)));
+				new TupleInvocationHandler(new TupleImpl(args)));
 		return t;
 
 	}

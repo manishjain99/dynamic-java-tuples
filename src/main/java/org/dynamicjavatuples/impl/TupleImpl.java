@@ -25,7 +25,7 @@ import org.dynamicjavatuples.Tuple;
 
 
 
-public final class TupleImpl<A,B> implements Tuple{
+public final class TupleImpl implements Tuple{
 	private final Object elements[];
 	
 	public TupleImpl(Object[] elementsInTouple){
