@@ -2,7 +2,7 @@ package org.dynamicjavatuples;
 
 import org.dynamicjavatuples.impl.TupleNumber;
 
-public interface Address<A,B,C,D>  extends Tuple{
+public interface Address<A,B,C,D>  extends Tupl  e{
 	@TupleNumber(id=0)
 	public A getStreetAddress();
 	
