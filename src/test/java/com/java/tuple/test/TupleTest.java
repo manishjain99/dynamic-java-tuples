@@ -16,13 +16,6 @@ public class TupleTest {
 		Pair<String,Date> birthDay =  TupleFactory.createInstance(Pair.class, "Manish", new Date());
 		System.out.println(birthDay.getA());
 		System.out.println(birthDay.getB());
-		
-		Address address = null;
-		address = TupleFactory.createInstance(Address.class, a, b)
-		
-		
-		BirthInfo<STring, Date, Address> birthInfo;
-		birthInfo = TupleFactory.createInstance(BirthInfo.class, "MAnish", new Date(), address);
 	}
 	
 }
