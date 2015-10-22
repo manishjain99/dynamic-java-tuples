@@ -1,7 +1,5 @@
-package com.java.tuple.test;
+package org.dynamicjavatuples;
 
-import org.dynamicjavatuples.Tuple;
-import org.dynamicjavatuples.TupleFactory;
 import org.dynamicjavatuples.impl.TupleNumber;
 
 public interface Address<A,B,C,D>  extends Tuple{

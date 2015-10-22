@@ -23,7 +23,6 @@ import java.lang.reflect.Proxy;
 import org.dynamicjavatuples.impl.TupleImpl;
 import org.dynamicjavatuples.impl.TupleInvocationHandler;
 
-import com.java.tuple.test.Address;
 
 
 public class TupleFactory {

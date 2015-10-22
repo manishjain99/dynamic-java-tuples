@@ -2,6 +2,7 @@ package com.java.tuple.test;
 
 import java.util.Date;
 
+import org.dynamicjavatuples.Address;
 import org.dynamicjavatuples.Tuple;
 import org.dynamicjavatuples.TupleFactory;
 import org.dynamicjavatuples.impl.TupleNumber;
